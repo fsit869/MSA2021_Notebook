@@ -36,11 +36,17 @@ export const SideBar = () => {
   return (
     <div className={classes.list}>
       <List>
+      <ListItem button>
+          <ListItemIcon>
+            <ArrowUpwardIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.listText} primary="Dashboard" />
+        </ListItem>
         <ListItem button onClick={handleHomeClick}>
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
-          <ListItemText className={classes.listText} primary="Home" />
+          <ListItemText className={classes.listText} primary="Tasks" />
         </ListItem>
         <ListItem button>
           <ListItemIcon>
