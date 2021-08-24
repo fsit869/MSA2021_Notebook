@@ -5,7 +5,7 @@ import Header from './components/Header';
 import { createStyles, CssBaseline, makeStyles, Theme } from '@material-ui/core';
 import { Redirect, Route, Switch } from 'react-router';
 import { Test } from './components/Test';
-import { LandingPage } from './contentpages/LandingPage';
+import DashboardApp from './contentpages/DashBoard';
 
 
 function App() {
@@ -16,8 +16,8 @@ function App() {
       <Header></Header>
       <Switch>
         <Route path="/home" component={MainContent}/>
-        <Route path="/test" component={LandingPage}/>
-        <Redirect from="/" to="home" />
+        <Route path="/dashboard" component={DashboardApp}/>
+        <Redirect from="/" to="dashboard" />
       </Switch>
     </React.Fragment>
   )
