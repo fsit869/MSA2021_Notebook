@@ -1,0 +1,26 @@
+# notes.graphqls
+# Schema of notes. GraphQL
+#
+#
+
+# Note object
+type Note {
+    id: ID!,
+    title: String
+    description: String
+    date: String
+    severity: Int
+}
+
+# Queries
+type Query {
+    getNote(id: ID): Note
+    getAllNotes: [Note]
+}
+
+# Mutations
+type Mutation {
+    newNote(title: String!, date: String!, description: String!, severity: Int): Note
+    deleteNote(id: String!): Boolean
+    deleteAllNotes: Boolean
+}
