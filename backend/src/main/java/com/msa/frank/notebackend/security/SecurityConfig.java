@@ -19,10 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() // Not needed. Complicates application.
                 .authorizeRequests()
-
                 .antMatchers("/graphql").permitAll()
                 .antMatchers("/vendor/**").permitAll()
                 .antMatchers("/playground").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().and()
+                .cors()
+                .disable();
     }
 }
