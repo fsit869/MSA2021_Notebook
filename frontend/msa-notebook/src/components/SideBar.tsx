@@ -9,71 +9,65 @@ Component containing sidebar
 
 import React from "react";
 import {
-  Divider,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  makeStyles,
+    Divider,
+    Link,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    makeStyles,
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import AddBoxIcon from "@material-ui/icons/AddBox";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  listText: {
-    color: "black",
-  },
-  fullList: {
-    width: "auto",
-  },
+    list: {
+        width: 250,
+    },
+    listText: {
+        color: "black",
+    },
+    fullList: {
+        width: "auto",
+    },
 });
 
 export const SideBar = () => {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  return (
-    <div className={classes.list}>
-      <List>
-        <ListItem button onClick={e => window.location.href = "/dashboard"}>
-          <ListItemIcon>
-            <ArrowUpwardIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listText} primary="Dashboard" />
-        </ListItem>
+    return (
+        <div className={classes.list}>
+            <List>
+                <ListItem button onClick={e => window.location.href = "/dashboard"}>
+                    <ListItemIcon>
+                        <HomeIcon/>
+                    </ListItemIcon>
+                    <ListItemText className={classes.listText} primary="Dashboard"/>
+                </ListItem>
 
-        <ListItem button onClick={e => window.location.href = "/home"}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listText} primary="Tasks" />
-        </ListItem>
-      </List>
-
-
-      <Divider />
+                <ListItem button onClick={e => window.location.href = "/tasks"}>
+                    <ListItemIcon>
+                        <ArrowUpwardIcon/>
+                    </ListItemIcon>
+                    <ListItemText className={classes.listText} primary="Tasks"/>
+                </ListItem>
+            </List>
 
 
-    
-      <List>
-        <ListItem button>
-          <ListItemIcon>
-            <AddBoxIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listText} primary="Delete All" />
-        </ListItem>
+            <Divider/>
 
-        <ListItem button>
-          <ListItemIcon>
-            <AddBoxIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.listText} primary="About" />
-        </ListItem>
-      </List>
-    </div>
-  );
+
+            <List>
+                <ListItem button>
+                    <ListItemIcon>
+                        <DeleteIcon></DeleteIcon>
+                    </ListItemIcon>
+                    <ListItemText className={classes.listText} primary="Delete All Notes"/>
+                </ListItem>
+
+            </List>
+        </div>
+    );
 };
