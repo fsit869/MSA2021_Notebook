@@ -64,7 +64,7 @@ function getServerityColours(severity: number): string {
     } else if (severity === 2) {
         return "orange";
     } else if (severity === 3) {
-        return "red";
+        return "#f2594d";
     } else {
         return "yellow";
     }
@@ -98,8 +98,8 @@ export const TaskComponent: React.FC<Props> = (props: Props) => {
     // Unmount component
     if (rendered === false) {
         return null;
-        // Also need callback to model to delete this
-        // Actually could just call model delete this, then rerender all notes.
+        // Also need callback to api to delete this
+        // Actually could just call api delete this, then rerender all notes.
     }
 
     return (

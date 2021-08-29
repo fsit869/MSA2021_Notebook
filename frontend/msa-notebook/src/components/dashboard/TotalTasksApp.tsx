@@ -24,7 +24,7 @@ const useStyles = makeStyles<Theme, Props>((theme) =>
             backgroundColor:"lightgrey",
         },
         highPriorityCell: {
-            color:"red",
+            color:"#f2594d",
             backgroundColor:"#f7f7f7"
         },
         mediumPriorityCell: {

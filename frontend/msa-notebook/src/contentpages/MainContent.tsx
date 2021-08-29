@@ -10,12 +10,15 @@ import {
     Theme,
     Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, {useEffect} from "react";
 
 import Header from "../components/Header";
 import {TaskComponent} from "../components/task/TaskComponent";
 import AddIcon from "@material-ui/icons/Add";
 import NewTask from "../components/task/NewTask";
+import {useQuery} from "@apollo/client";
+import {GET_ALL_NOTES} from "../api/queries";
+import NoteInterface from "../api/NoteInterface";
 
 const useStyles = makeStyles<Theme>((theme) =>
     createStyles({
@@ -36,8 +39,12 @@ const useStyles = makeStyles<Theme>((theme) =>
 
 function MainContent() {
     const classes = useStyles();
+    // {pollInterval:1000}
+    const { loading, error, data } = useQuery(GET_ALL_NOTES, );
+    if (loading) return <Typography>Loading data</Typography>;
+    if (error) return <Typography color="error">Error Loading Data</Typography>;
+    console.log(data.getAllNotes[0]);
 
-    // Delete tasks !!!! CONSIDER MOVING THIS TO A MODEL LAYER
     const deleteTask = () => {
     };
 
@@ -54,20 +61,30 @@ function MainContent() {
             <Box
                 p={3}>
                 <Grid container spacing={2} justify="center">
-                    <Grid item>
-                        <TaskComponent
-                            title="One"
-                            description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"
-                            severity={0}
-                        ></TaskComponent>
-                    </Grid>
-                    <Grid item>
-                        <TaskComponent
-                            title="One"
-                            description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"
-                            severity={0}
-                        ></TaskComponent>
-                    </Grid>
+                    {data.getAllNotes.map((currentNote:NoteInterface) =>
+                        (
+                            <Grid item>
+                                <TaskComponent
+                                    title={currentNote.title}
+                                    description={currentNote.description}
+                                    severity={currentNote.severity}
+                                />
+                            </Grid>
+                        ))}
+                    {/*<Grid item>*/}
+                    {/*    <TaskComponent*/}
+                    {/*        title="One"*/}
+                    {/*        description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"*/}
+                    {/*        severity={0}*/}
+                    {/*    ></TaskComponent>*/}
+                    {/*</Grid>*/}
+                    {/*<Grid item>*/}
+                    {/*    <TaskComponent*/}
+                    {/*        title="One"*/}
+                    {/*        description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"*/}
+                    {/*        severity={0}*/}
+                    {/*    ></TaskComponent>*/}
+                    {/*</Grid>*/}
 
                 </Grid>
 

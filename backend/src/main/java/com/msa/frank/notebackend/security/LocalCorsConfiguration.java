@@ -23,6 +23,9 @@ public class LocalCorsConfiguration {
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("http://localhost:3000/**");
+        config.addAllowedOrigin("http://localhost:3000/*");
+        config.addAllowedOrigin("http://localhost:3000/tasks");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/graphql/**", config);
