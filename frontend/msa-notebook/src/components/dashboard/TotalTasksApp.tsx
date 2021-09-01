@@ -13,6 +13,10 @@ import {
 } from "@material-ui/core";
 import {blue} from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {useQuery} from "@apollo/client";
+import {GET_ALL_NOTE_SEVERITIES} from "../../api/queries";
+import React from "react";
+import NoteInterface from "../../api/NoteInterface";
 
 const useStyles = makeStyles<Theme, Props>((theme) =>
     createStyles({
@@ -52,6 +56,27 @@ interface Props {
 
 export const TotalTaskApp: React.FC<Props> = (props: Props) => {
     const classes = useStyles(props);
+    const [unRankedTotal, setUnRankedTotal] = React.useState(0);
+    const [lowTotal, setLowTotal] = React.useState(0);
+    const [medTotal, setMedTotal] = React.useState(0);
+    const [highTotal, setHighTotal] = React.useState(0);
+
+    // const { loading, error, data } = useQuery(GET_ALL_NOTE_SEVERITIES, );
+    // if (loading) return <Typography>Loading data</Typography>;
+    // if (error) return <Typography color="error">Error Loading Data</Typography>;
+    // data.getAllNotes.map((currentNote:NoteInterface) => {
+    //     if (currentNote.severity==3) {
+    //         setLowTotal(lowTotal+1)
+    //     } else if (currentNote.severity==2) {
+    //         setMedTotal(medTotal+1)
+    //     } else if (currentNote.severity==1) {
+    //         setHighTotal(highTotal+1)
+    //     } else {
+    //         setUnRankedTotal(unRankedTotal+1)
+    //     }
+    // });
+
+
     return (
         <TableContainer component={Paper}>
             <Table>
@@ -63,19 +88,19 @@ export const TotalTaskApp: React.FC<Props> = (props: Props) => {
                 <TableBody>
                     <TableRow key="noPriorityRow" >
                         <TableCell className={classes.noPriorityCell} scope="row">Unranked</TableCell>
-                        <TableCell align="center">{props.totalUnrankedTasks}</TableCell>
+                        <TableCell align="center">{unRankedTotal}</TableCell>
                     </TableRow>
                     <TableRow key="lowPriorityRow">
                         <TableCell  className={classes.lowPriorityCell} scope="row">Low</TableCell>
-                        <TableCell align="center">{props.totalLowRankTasks}</TableCell>
+                        <TableCell align="center">{lowTotal}</TableCell>
                     </TableRow>
                     <TableRow key="medPriorityRow" >
                         <TableCell className={classes.mediumPriorityCell} scope="row">Medium</TableCell>
-                        <TableCell align="center">{props.totalMedRankTasks}</TableCell>
+                        <TableCell align="center">{medTotal}</TableCell>
                     </TableRow>
                     <TableRow key="highPriorityRow" >
                         <TableCell className={classes.highPriorityCell} scope="row">High</TableCell>
-                        <TableCell align="center">{props.totalHighRankTasks}</TableCell>
+                        <TableCell align="center">{highTotal}</TableCell>
                     </TableRow>
                 </TableBody>
 

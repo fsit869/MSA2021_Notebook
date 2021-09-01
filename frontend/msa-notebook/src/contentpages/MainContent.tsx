@@ -43,7 +43,6 @@ function MainContent() {
     const { loading, error, data } = useQuery(GET_ALL_NOTES, );
     if (loading) return <Typography>Loading data</Typography>;
     if (error) return <Typography color="error">Error Loading Data</Typography>;
-    console.log(data.getAllNotes[0]);
 
     const deleteTask = () => {
     };
@@ -65,27 +64,14 @@ function MainContent() {
                         (
                             <Grid item>
                                 <TaskComponent
+                                    id={currentNote.id}
                                     title={currentNote.title}
                                     description={currentNote.description}
+                                    date={currentNote.date}
                                     severity={currentNote.severity}
                                 />
                             </Grid>
                         ))}
-                    {/*<Grid item>*/}
-                    {/*    <TaskComponent*/}
-                    {/*        title="One"*/}
-                    {/*        description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"*/}
-                    {/*        severity={0}*/}
-                    {/*    ></TaskComponent>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item>*/}
-                    {/*    <TaskComponent*/}
-                    {/*        title="One"*/}
-                    {/*        description="This is text that i have wrirten and it is intentionally very loing so it spans over multiple lines and yep. I actually hate using javsrirpt sand typescripoytrydrt i prefer java. I hate fronte end deveoplentewte"*/}
-                    {/*        severity={0}*/}
-                    {/*    ></TaskComponent>*/}
-                    {/*</Grid>*/}
-
                 </Grid>
 
                 {/* New task FAB */}

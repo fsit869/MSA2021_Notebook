@@ -21,6 +21,8 @@ import {
 import {blue} from "@material-ui/core/colors";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {useState} from "react";
+import {useMutation} from "@apollo/client";
+import {DELETE_NOTE, NEW_NOTE} from "../../api/mutations";
 
 // Themes
 const useStyles = makeStyles<Theme, Props>((theme) =>
@@ -50,9 +52,11 @@ const useStyles = makeStyles<Theme, Props>((theme) =>
 
 
 interface Props {
+    id: string;
     title: string;
     description: string;
     severity: number; // 0-3  None->Severe
+    date: string,
 }
 
 // Set severity colours 
@@ -88,11 +92,16 @@ function getServerityText(severity: number): string {
 export const TaskComponent: React.FC<Props> = (props: Props) => {
     const classes = useStyles(props);
     const [rendered, setRendered] = useState(true); // State determining if component is rendered.
+    const [newNote, { data, loading, error }] = useMutation(DELETE_NOTE);
 
     // Handle delete requests
     const handleDelete = () => {
-        console.log("Deleted lol");
-        setRendered(false);
+        newNote({
+            variables: {
+                id: props.id
+            }
+        })
+        // setRendered(false);
     };
 
     // Unmount component
@@ -107,7 +116,7 @@ export const TaskComponent: React.FC<Props> = (props: Props) => {
             {/* Title */}
             <CardHeader
                 title={props.title}
-                subheader="Date Created: 01/02/2021"
+                subheader={"Date Created: " + props.date}
                 subheaderTypographyProps={{variant: "subtitle2"}}
                 className={classes.cardHeader}
             ></CardHeader>

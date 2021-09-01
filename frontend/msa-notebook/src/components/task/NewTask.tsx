@@ -35,6 +35,9 @@ import {
     Theme,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import {useMutation, useQuery} from "@apollo/client";
+import { NEW_NOTE} from "../../api/mutations";
+import {GET_ALL_NOTES} from "../../api/queries";
 
 // Styles
 const useStyles = makeStyles<Theme>((theme) =>
@@ -54,9 +57,24 @@ const useStyles = makeStyles<Theme>((theme) =>
 
 export default function FormDialog() {
     const [open, setOpen] = React.useState(false); // State checking if dialogue open/Closed
+
     const [severity, setSeverity] = React.useState(0); // Prority state
-    const [wordCounter, setWordCounter] = React.useState(0); // Word counter state for comments
+    const [title, setTitle] = React.useState(""); // Word counter state for comments
+    const [comments, setComments] = React.useState(""); // Word counter state for comments
+
+    const [charCounter, setCharCounter] = React.useState(0);
+    const [commentError, setCommentError] = React.useState(false)
+    const [helperText, setHelperText] = React.useState(charCounter+"/100")
+
     const classes = useStyles();
+    const [newNote, { data, loading, error }] = useMutation(NEW_NOTE);
+    // newNote({variables: {
+    //         title: "hi",
+    //         date: "7/11",
+    //         description: "hi",
+    //         severity: 3,
+    // }})
+
 
     // Called if FAB clicked
     const handleClickOpen = () => {
@@ -65,26 +83,49 @@ export default function FormDialog() {
 
     // Called if closing dialogue
     const handleClose = () => {
+        setComments("");
+        setTitle("");
         setOpen(false);
-    };
+        setCharCounter(0)
+        setCommentError(false)
 
-    // Handle changing of priority switch
-    const handleServerityChange = (
-        event: React.ChangeEvent<{ value: unknown }>
-    ) => {
-        setSeverity(event.target.value as number);
     };
 
     // Handle finish creating new note
     const createNote = () => {
+        if (commentError) {
+        } else {
+            newNote({
+                variables: {
+                    title: title,
+                    date: new Date().toISOString().slice(0, 10),
+                    description: comments,
+                    severity: severity,
+                }
+            })
+            handleClose();
+        }
 
-        handleClose()
     };
 
+    const onCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        let charLength:number = event.target.value.length
+
+        if (charLength>120) {
+            setComments(event.target.value)
+            setCommentError(true);
+            setHelperText("Max characters reached!")
+        } else{
+            setComments(event.target.value)
+            setCharCounter(charLength);
+            setCommentError(false);
+            setHelperText(event.target.value.length + "/120")
+        }
+
+    }
 
     return (
         <div>
-
             {/* FLOATING ACTION BUTTON */}
             <Fab
                 color="primary"
@@ -97,7 +138,6 @@ export default function FormDialog() {
             </Fab>
 
             {/* DIALOGUE MENU */}
-
             <Dialog
                 open={open}
                 onClose={handleClose}
@@ -118,10 +158,11 @@ export default function FormDialog() {
                             // autoFocus
                             required
                             margin="dense"
-                            id="title1"
                             label="Title"
                             type="title"
                             variant="outlined"
+                            onChange= {(e) => setTitle(e.target.value)}
+                            value={title}
                             fullWidth
                             rows={1}
                         />
@@ -135,9 +176,10 @@ export default function FormDialog() {
                             multiline
                             rows={4}
                             variant="outlined"
-                            inputProps={{maxLength: 10}}
-                            // helperText={wordCounter}+"/20"
-                            // error
+                            value={comments}
+                            onChange={(e) => onCommentChange(e)}
+                            error={commentError}
+                            helperText={helperText}
                             fullWidth
                         />
                     </Box>
@@ -150,7 +192,7 @@ export default function FormDialog() {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={severity}
-                            onChange={handleServerityChange}
+                            onChange={(e)=>setSeverity(e.target.value as number)}
                         >
                             <MenuItem value={3}>Severe</MenuItem>
                             <MenuItem value={2}>Medium</MenuItem>

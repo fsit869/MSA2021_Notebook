@@ -21,6 +21,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {useMutation} from "@apollo/client";
+import {DELETE_ALL_NOTES} from "../api/mutations";
 
 const useStyles = makeStyles({
     list: {
@@ -34,8 +36,11 @@ const useStyles = makeStyles({
     },
 });
 
+
+
 export const SideBar = () => {
     const classes = useStyles();
+    const [deleteAllNotes, { data, loading, error }] = useMutation(DELETE_ALL_NOTES);
 
     return (
         <div className={classes.list}>
@@ -60,7 +65,7 @@ export const SideBar = () => {
 
 
             <List>
-                <ListItem button>
+                <ListItem button onClick={e => deleteAllNotes}>
                     <ListItemIcon>
                         <DeleteIcon></DeleteIcon>
                     </ListItemIcon>
