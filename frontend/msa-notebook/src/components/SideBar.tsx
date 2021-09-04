@@ -65,7 +65,7 @@ export const SideBar = () => {
 
 
             <List>
-                <ListItem button onClick={e => deleteAllNotes}>
+                <ListItem button onClick={e => deleteAllNotes()}>
                     <ListItemIcon>
                         <DeleteIcon></DeleteIcon>
                     </ListItemIcon>

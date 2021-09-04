@@ -47,34 +47,29 @@ const useStyles = makeStyles<Theme, Props>((theme) =>
 );
 
 interface Props {
-    severity: number; // Severity 0=None, 1=Low, 2=Med, 3=High
-    totalUnrankedTasks: number;
-    totalLowRankTasks: number;
-    totalMedRankTasks: number;
-    totalHighRankTasks: number;
 }
 
 export const TotalTaskApp: React.FC<Props> = (props: Props) => {
     const classes = useStyles(props);
-    const [unRankedTotal, setUnRankedTotal] = React.useState(0);
-    const [lowTotal, setLowTotal] = React.useState(0);
-    const [medTotal, setMedTotal] = React.useState(0);
-    const [highTotal, setHighTotal] = React.useState(0);
+    let lowTotal=0;
+    let medTotal=0;
+    let highTotal=0
+    let unrankedTotal=0;
 
-    // const { loading, error, data } = useQuery(GET_ALL_NOTE_SEVERITIES, );
-    // if (loading) return <Typography>Loading data</Typography>;
-    // if (error) return <Typography color="error">Error Loading Data</Typography>;
-    // data.getAllNotes.map((currentNote:NoteInterface) => {
-    //     if (currentNote.severity==3) {
-    //         setLowTotal(lowTotal+1)
-    //     } else if (currentNote.severity==2) {
-    //         setMedTotal(medTotal+1)
-    //     } else if (currentNote.severity==1) {
-    //         setHighTotal(highTotal+1)
-    //     } else {
-    //         setUnRankedTotal(unRankedTotal+1)
-    //     }
-    // });
+    const { loading, error, data } = useQuery(GET_ALL_NOTE_SEVERITIES, );
+    if (loading) return <Typography>Loading data</Typography>;
+    if (error) return <Typography color="error">Error Loading Data</Typography>;
+    data.getAllNotes.map((currentNote:NoteInterface) => {
+        if (currentNote.severity==3) {
+            highTotal += 1;
+        } else if (currentNote.severity==2) {
+            medTotal += 1;
+        } else if (currentNote.severity==1) {
+            lowTotal += 1;
+        } else {
+            unrankedTotal +=1;
+        }
+    });
 
 
     return (
@@ -88,7 +83,7 @@ export const TotalTaskApp: React.FC<Props> = (props: Props) => {
                 <TableBody>
                     <TableRow key="noPriorityRow" >
                         <TableCell className={classes.noPriorityCell} scope="row">Unranked</TableCell>
-                        <TableCell align="center">{unRankedTotal}</TableCell>
+                        <TableCell align="center">{unrankedTotal}</TableCell>
                     </TableRow>
                     <TableRow key="lowPriorityRow">
                         <TableCell  className={classes.lowPriorityCell} scope="row">Low</TableCell>
@@ -104,7 +99,7 @@ export const TotalTaskApp: React.FC<Props> = (props: Props) => {
                     </TableRow>
                 </TableBody>
 
-                <caption className={classes.headerCell}>You have {props.totalLowRankTasks+props.totalLowRankTasks+props.totalMedRankTasks+props.totalHighRankTasks} notes</caption>
+                <caption className={classes.headerCell}>You have {unrankedTotal+lowTotal+medTotal+highTotal} notes</caption>
             </Table>
         </TableContainer>
     );

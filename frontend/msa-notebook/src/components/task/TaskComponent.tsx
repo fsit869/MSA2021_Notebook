@@ -101,15 +101,7 @@ export const TaskComponent: React.FC<Props> = (props: Props) => {
                 id: props.id
             }
         })
-        // setRendered(false);
     };
-
-    // Unmount component
-    if (rendered === false) {
-        return null;
-        // Also need callback to api to delete this
-        // Actually could just call api delete this, then rerender all notes.
-    }
 
     return (
         <Card className={classes.root}>

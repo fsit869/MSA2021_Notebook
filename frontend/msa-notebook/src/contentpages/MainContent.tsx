@@ -6,7 +6,7 @@ import {
     createStyles,
     Fab,
     Grid,
-    makeStyles,
+    makeStyles, MenuItem, Select,
     Theme,
     Typography,
 } from "@material-ui/core";
@@ -15,10 +15,11 @@ import React, {useEffect} from "react";
 import Header from "../components/Header";
 import {TaskComponent} from "../components/task/TaskComponent";
 import AddIcon from "@material-ui/icons/Add";
-import NewTask from "../components/task/NewTask";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_NOTES} from "../api/queries";
 import NoteInterface from "../api/NoteInterface";
+import {NewTask} from "../components/task/NewTask";
+import {sortPriorityFromHighest, sortPriorityFromLowest, sortTitle, sortTitleRev} from "../components/task/sortMethods";
 
 const useStyles = makeStyles<Theme>((theme) =>
     createStyles({
@@ -37,30 +38,73 @@ const useStyles = makeStyles<Theme>((theme) =>
     })
 );
 
+
+
 function MainContent() {
     const classes = useStyles();
-    // {pollInterval:1000}
-    const { loading, error, data } = useQuery(GET_ALL_NOTES, );
+    const [sortType, setSortType] = React.useState("SEVERITY");
+    const { loading, error, data, refetch} = useQuery(GET_ALL_NOTES, {pollInterval: 2000});
+
     if (loading) return <Typography>Loading data</Typography>;
     if (error) return <Typography color="error">Error Loading Data</Typography>;
 
-    const deleteTask = () => {
-    };
+    const onSortChange = (e:React.ChangeEvent<{name?: string | undefined, value: unknown}>) => {
+        setSortType(e.target.value as string)
+    }
 
-    // Create new task
-    const newTask = () => {
-    };
+    const displayData = () => {
+        let myNoteArray: NoteInterface[] = [];
+        data.getAllNotes.map((currentNote:NoteInterface) =>
+            (
+                myNoteArray.push(
+                    {
+                        id:currentNote.id,
+                        title:currentNote.title,
+                        description:currentNote.description,
+                        date:currentNote.date,
+                        severity:currentNote.severity
+                    }
+                )
+            )
+        )
+        myNoteArray.sort(determineSortType())
+        return myNoteArray;
+    }
 
-    // Loads tasks from graphQL
-    const loadTasks = () => {
-    };
+    const determineSortType = () => {
+        if (sortType === "SEVERITY") {
+            return sortPriorityFromLowest;
+        } else if (sortType === "SEVERITY_REV") {
+            return sortPriorityFromHighest;
+        } else if (sortType === "TITLE_REV") {
+            return sortTitleRev;
+        } else if (sortType === "TITLE") {
+            return sortTitle;
+        } else{
+            console.log("SORT ERR!")
+            return sortPriorityFromHighest;
+        }
+    }
 
     return (
         <div className={classes.root}>
-            <Box
-                p={3}>
+            <Box p={5}>
+                <Box p={2}>
+                    <Select
+                        value={sortType}
+                        onChange={onSortChange}
+                    >
+                        <MenuItem value={"SEVERITY"}>Severity</MenuItem>
+                        <MenuItem value={"SEVERITY_REV"}>Severity Rev</MenuItem>
+                        <MenuItem value={"TITLE_REV"}>Title Rev</MenuItem>
+                        <MenuItem value={"TITLE"}>Title</MenuItem>
+                    </Select>
+                </Box>
+
+
                 <Grid container spacing={2} justify="center">
-                    {data.getAllNotes.map((currentNote:NoteInterface) =>
+                    {
+                        displayData().map((currentNote:NoteInterface) =>
                         (
                             <Grid item>
                                 <TaskComponent

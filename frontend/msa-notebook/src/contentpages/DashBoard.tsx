@@ -39,7 +39,7 @@ export const DashBoard: React.FC<Props> = (props: Props) => {
                         <Paper className={classes.paper} variant="outlined" square={true}>
                             <Typography align="center" color="primary" variant="h5">Statistics</Typography>
                             <Box p={5} pr={5} pl={5} pb={5} pt={1}>
-                                <TotalTaskApp severity={0} totalHighRankTasks={44} totalLowRankTasks={33} totalMedRankTasks={22} totalUnrankedTasks={2}></TotalTaskApp>
+                                <TotalTaskApp></TotalTaskApp>
                             </Box>
                         </Paper>
                     </Grid>

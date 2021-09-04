@@ -54,8 +54,9 @@ const useStyles = makeStyles<Theme>((theme) =>
         priorityControl: {},
     })
 );
-
-export default function FormDialog() {
+interface Props {
+}
+export const NewTask: React.FC<Props> = (props: Props) => {
     const [open, setOpen] = React.useState(false); // State checking if dialogue open/Closed
 
     const [severity, setSeverity] = React.useState(0); // Prority state
@@ -68,13 +69,6 @@ export default function FormDialog() {
 
     const classes = useStyles();
     const [newNote, { data, loading, error }] = useMutation(NEW_NOTE);
-    // newNote({variables: {
-    //         title: "hi",
-    //         date: "7/11",
-    //         description: "hi",
-    //         severity: 3,
-    // }})
-
 
     // Called if FAB clicked
     const handleClickOpen = () => {
@@ -88,12 +82,12 @@ export default function FormDialog() {
         setOpen(false);
         setCharCounter(0)
         setCommentError(false)
-
     };
 
     // Handle finish creating new note
     const createNote = () => {
-        if (commentError) {
+        if (commentError || title.length===0) {
+
         } else {
             newNote({
                 variables: {
@@ -101,7 +95,7 @@ export default function FormDialog() {
                     date: new Date().toISOString().slice(0, 10),
                     description: comments,
                     severity: severity,
-                }
+                },
             })
             handleClose();
         }
@@ -160,6 +154,7 @@ export default function FormDialog() {
                             margin="dense"
                             label="Title"
                             type="title"
+                            inputProps={{ maxLength: 14 }}
                             variant="outlined"
                             onChange= {(e) => setTitle(e.target.value)}
                             value={title}
