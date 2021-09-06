@@ -43,7 +43,7 @@ const useStyles = makeStyles<Theme>((theme) =>
 function MainContent() {
     const classes = useStyles();
     const [sortType, setSortType] = React.useState("SEVERITY");
-    const { loading, error, data, refetch} = useQuery(GET_ALL_NOTES, {pollInterval: 2000});
+    const { loading, error, data} = useQuery(GET_ALL_NOTES, {pollInterval: 2000});
 
     if (loading) return <Typography>Loading data</Typography>;
     if (error) return <Typography color="error">Error Loading Data</Typography>;
