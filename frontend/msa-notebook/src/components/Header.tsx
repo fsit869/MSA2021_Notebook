@@ -68,7 +68,7 @@ function Header() {
                             <SideBar/>
                         </Drawer>
                     </IconButton>
-                    <Typography variant="h6" className={classes.title} onClick={e => window.location.href = "/dashboard"}>
+                    <Typography variant="h6" className={classes.title}>
                         MyNoteKeeper
                     </Typography>
                 </Toolbar>
