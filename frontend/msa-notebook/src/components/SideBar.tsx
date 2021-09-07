@@ -23,6 +23,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {useMutation} from "@apollo/client";
 import {DELETE_ALL_NOTES} from "../api/mutations";
+import {ListItemLink} from "./ListItemLink";
 
 const useStyles = makeStyles({
     list: {
@@ -45,19 +46,8 @@ export const SideBar = () => {
     return (
         <div className={classes.list}>
             <List>
-                <ListItem button onClick={e => window.location.href = "/dashboard"}>
-                    <ListItemIcon>
-                        <HomeIcon/>
-                    </ListItemIcon>
-                    <ListItemText className={classes.listText} primary="Dashboard"/>
-                </ListItem>
-
-                <ListItem button onClick={e => window.location.href = "/tasks"}>
-                    <ListItemIcon>
-                        <ArrowUpwardIcon/>
-                    </ListItemIcon>
-                    <ListItemText className={classes.listText} primary="Tasks"/>
-                </ListItem>
+                <ListItemLink to="/dashboard" primary="Dashboard" icon={<HomeIcon/>}/>
+                <ListItemLink to="/tasks" primary="Tasks" icon={<ArrowUpwardIcon/>}/>
             </List>
 
 
