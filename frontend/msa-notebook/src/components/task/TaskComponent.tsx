@@ -7,7 +7,6 @@
 
 
 import {
-    Box,
     Card,
     CardActions,
     CardContent,
@@ -23,9 +22,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {useState} from "react";
 import {useMutation} from "@apollo/client";
 import {DELETE_NOTE, NEW_NOTE} from "../../api/mutations";
+import NoteInterface from "../../api/NoteInterface";
 
 // Themes
-const useStyles = makeStyles<Theme, Props>((theme) =>
+const useStyles = makeStyles<Theme, NoteInterface>((theme) =>
     createStyles({
         root: {
             maxWidth: 260,
@@ -49,15 +49,6 @@ const useStyles = makeStyles<Theme, Props>((theme) =>
         },
     })
 );
-
-
-interface Props {
-    id: string;
-    title: string;
-    description: string;
-    severity: number; // 0-3  None->Severe
-    date: string,
-}
 
 // Set severity colours 
 function getServerityColours(severity: number): string {
@@ -89,10 +80,15 @@ function getServerityText(severity: number): string {
     }
 }
 
-export const TaskComponent: React.FC<Props> = (props: Props) => {
+/**
+ * Creates a new task
+ * @param props: NoteInterface props
+ * @constructor
+ */
+export const TaskComponent: React.FC<NoteInterface> = (props: NoteInterface) => {
     const classes = useStyles(props);
     const [rendered, setRendered] = useState(true); // State determining if component is rendered.
-    const [newNote, { data, loading, error }] = useMutation(DELETE_NOTE);
+    const [newNote, { data, loading, error }] = useMutation(DELETE_NOTE); // Delete mutation
 
     // Handle delete requests
     const handleDelete = () => {

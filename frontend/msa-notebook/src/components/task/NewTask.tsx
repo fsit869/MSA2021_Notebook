@@ -18,26 +18,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import {
     Box,
-    ButtonGroup,
-    Checkbox,
     createStyles,
     Fab,
     FormControl,
-    FormControlLabel,
-    FormLabel,
-    Grid,
     InputLabel,
     makeStyles,
     MenuItem,
-    Radio,
-    RadioGroup,
     Select,
     Theme,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {useMutation, useQuery} from "@apollo/client";
 import { NEW_NOTE} from "../../api/mutations";
-import {GET_ALL_NOTES} from "../../api/queries";
 
 // Styles
 const useStyles = makeStyles<Theme>((theme) =>
@@ -54,28 +46,37 @@ const useStyles = makeStyles<Theme>((theme) =>
         priorityControl: {},
     })
 );
+
+// No props taken
 interface Props {
 }
+
+/**
+ * Creates a FAB which opens a dialogue for creating a new note
+ * @param props None
+ */
 export const NewTask: React.FC<Props> = (props: Props) => {
     const [open, setOpen] = React.useState(false); // State checking if dialogue open/Closed
 
     const [severity, setSeverity] = React.useState(0); // Prority state
-    const [title, setTitle] = React.useState(""); // Word counter state for comments
-    const [comments, setComments] = React.useState(""); // Word counter state for comments
+    const [title, setTitle] = React.useState(""); // Title var
+    const [comments, setComments] = React.useState(""); // Comment var
 
-    const [charCounter, setCharCounter] = React.useState(0);
-    const [commentError, setCommentError] = React.useState(false)
-    const [helperText, setHelperText] = React.useState(charCounter+"/100")
+    const [charCounter, setCharCounter] = React.useState(0); // Total characters in comment
+    const [commentError, setCommentError] = React.useState(false) // Set error
+    const [helperText, setHelperText] = React.useState(charCounter+"/100") // Comment helper txt
 
     const classes = useStyles();
+
+    // Mutation new note
     const [newNote, { data, loading, error }] = useMutation(NEW_NOTE);
 
-    // Called if FAB clicked
+    // Called if FAB clicked. Handles opening on dialogue
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    // Called if closing dialogue
+    // Handles closing of dialogue
     const handleClose = () => {
         setComments("");
         setTitle("");
@@ -87,8 +88,9 @@ export const NewTask: React.FC<Props> = (props: Props) => {
     // Handle finish creating new note
     const createNote = () => {
         if (commentError || title.length===0) {
-
+            // Reject creating new note if error
         } else {
+            // Send mutation for new note
             newNote({
                 variables: {
                     title: title,
@@ -99,9 +101,9 @@ export const NewTask: React.FC<Props> = (props: Props) => {
             })
             handleClose();
         }
-
     };
 
+    // Handles limit on comment and error status
     const onCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         let charLength:number = event.target.value.length
 
@@ -115,7 +117,6 @@ export const NewTask: React.FC<Props> = (props: Props) => {
             setCommentError(false);
             setHelperText(event.target.value.length + "/120")
         }
-
     }
 
     return (
@@ -149,7 +150,6 @@ export const NewTask: React.FC<Props> = (props: Props) => {
                     {/* Title textfield */}
                     <Box pb={2}>
                         <TextField
-                            // autoFocus
                             required
                             margin="dense"
                             label="Title"
@@ -166,7 +166,6 @@ export const NewTask: React.FC<Props> = (props: Props) => {
                     {/* Comments textfield */}
                     <Box pb={2}>
                         <TextField
-                            // id="outlined-multiline-static"
                             label="Comments"
                             multiline
                             rows={4}
@@ -178,7 +177,6 @@ export const NewTask: React.FC<Props> = (props: Props) => {
                             fullWidth
                         />
                     </Box>
-
 
                     {/* Priority switch */}
                     <FormControl className={classes.priorityControl} fullWidth={true}>

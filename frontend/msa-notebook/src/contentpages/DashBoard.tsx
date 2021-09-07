@@ -4,6 +4,7 @@ import {TotalTaskApp} from "../components/dashboard/TotalTasksApp";
 import {Clock} from "../components/dashboard/Clock";
 
 // ----------------------------------------------------------------------
+// Styling
 const useStyles = makeStyles<Theme>((theme) =>
     createStyles({
         root: {
@@ -19,8 +20,10 @@ const useStyles = makeStyles<Theme>((theme) =>
     })
 );
 
+// No props taken
 interface Props {
 }
+
 
 export const DashBoard: React.FC<Props> = (props: Props) => {
     const classes = useStyles();
@@ -28,6 +31,7 @@ export const DashBoard: React.FC<Props> = (props: Props) => {
         <div className={classes.root}>
             <Box p={5} pt={5} >
                 <Grid container spacing={2} justify="center">
+                    {/*LEFT PANEL*/}
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <Paper className={classes.paper} variant="outlined" square={true}>
                             <Typography align="center" color="primary" variant="h5">Your Dashboard</Typography>
@@ -35,6 +39,7 @@ export const DashBoard: React.FC<Props> = (props: Props) => {
                         </Paper>
                     </Grid>
 
+                    {/*RIGHT PANEL*/}
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <Paper className={classes.paper} variant="outlined" square={true}>
                             <Typography align="center" color="primary" variant="h5">Statistics</Typography>

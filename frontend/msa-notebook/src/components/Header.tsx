@@ -23,6 +23,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import {SideBar} from "./SideBar";
 import AddIcon from "@material-ui/icons/Add";
 
+// Styles
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -37,11 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
+// Props taken
 interface headerPropsInterface {
     displayText: string;
     loggedIn: boolean;
 }
 
+// Header component
 function Header() {
     // Sidebar
     const [sideBar, setSideBar] = useState(false);
@@ -56,6 +59,7 @@ function Header() {
             <CssBaseline/>
             <AppBar position="relative">
                 <Toolbar>
+                    {/*SIDEBAR*/}
                     <IconButton
                         edge="start"
                         color="inherit"
@@ -68,6 +72,8 @@ function Header() {
                             <SideBar/>
                         </Drawer>
                     </IconButton>
+
+                    {/*HEADER TITLE*/}
                     <Typography variant="h6" className={classes.title}>
                         MyNoteKeeper
                     </Typography>

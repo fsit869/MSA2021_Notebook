@@ -1,23 +1,16 @@
 import {
-    Box,
-    Card,
-    CardActions,
-    CardContent,
-    CardHeader,
     createStyles,
-    IconButton,
     makeStyles,
     Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
     Theme,
     Typography,
 } from "@material-ui/core";
-import {blue} from "@material-ui/core/colors";
-import DeleteIcon from "@material-ui/icons/Delete";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_NOTE_SEVERITIES} from "../../api/queries";
 import React from "react";
 import NoteInterface from "../../api/NoteInterface";
 
+// Styling
 const useStyles = makeStyles<Theme, Props>((theme) =>
     createStyles({
         root: {
@@ -46,19 +39,29 @@ const useStyles = makeStyles<Theme, Props>((theme) =>
     })
 );
 
+// No props taken
 interface Props {
 }
 
+/**
+ * Component that displays total tasks from API
+ * @param props
+ * @constructor
+ */
 export const TotalTaskApp: React.FC<Props> = (props: Props) => {
     const classes = useStyles(props);
+    // Counters
     let lowTotal=0;
     let medTotal=0;
     let highTotal=0
     let unrankedTotal=0;
 
+    // fetch data from API
     const { loading, error, data } = useQuery(GET_ALL_NOTE_SEVERITIES, );
     if (loading) return <Typography>Loading data</Typography>;
     if (error) return <Typography color="error">Error Loading Data</Typography>;
+
+    // Count total notes
     data.getAllNotes.map((currentNote:NoteInterface) => {
         if (currentNote.severity==3) {
             highTotal += 1;
@@ -71,7 +74,7 @@ export const TotalTaskApp: React.FC<Props> = (props: Props) => {
         }
     });
 
-
+    // Return Component
     return (
         <TableContainer component={Paper}>
             <Table>
