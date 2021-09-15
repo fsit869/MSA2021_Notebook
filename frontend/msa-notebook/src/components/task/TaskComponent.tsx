@@ -107,11 +107,12 @@ export const TaskComponent: React.FC<NoteInterface> = (props: NoteInterface) => 
                 subheader={"Date Created: " + props.date}
                 subheaderTypographyProps={{variant: "subtitle2"}}
                 className={classes.cardHeader}
+                data-testid="headerElement"
             ></CardHeader>
 
             {/* Comments */}
             <CardContent className={classes.cardContent}>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="p" data-testid="descriptionElement">
                     {props.description}
                 </Typography>
             </CardContent>
@@ -125,7 +126,7 @@ export const TaskComponent: React.FC<NoteInterface> = (props: NoteInterface) => 
                 </IconButton>
 
                 {/* Serverity text */}
-                <Typography variant="body2" align="left" component="p">
+                <Typography variant="body2" align="left" component="p" data-testid="severityText">
                     {getServerityText(props.severity)}
                 </Typography>
             </CardActions>

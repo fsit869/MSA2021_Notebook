@@ -1,3 +1,9 @@
+/**
+ * This component is heavily taken from Materials UI documentation
+ * https://material-ui-next.com/demos/buttons/#third-party-routing-library
+ */
+
+
 import {Link as RouterLink, LinkProps as RouterLinkProps} from 'react-router-dom';
 import React from "react";
 import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
