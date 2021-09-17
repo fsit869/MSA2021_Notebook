@@ -41,3 +41,6 @@ This project contains a web app, which allows the user to create and display not
 <li> CORS security policy. Fixed by added security config with Spring boot </li>
 <li> Deployment using Github actions & Azure. Github actions was working, however Azure kept displaying "permission issues". Narrowed down error to React Router and relative URI. Unable to fix problem (A total of 31 commits was done), resulted to using Netlify </li>
 
+<h1> Setup </h1>
+API keys and Apollo Client are removed in this repo.
+Please make sure you fill in the API keys and URI's
