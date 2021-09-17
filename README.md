@@ -16,6 +16,7 @@ By Frank Situ
 <p>
 This project contains a web app, which allows the user to create and display notes. 
 <li> Backend written in Java using Spring Framework (Approved by MSP)</li>
+  <li> Backend uses Maven. (Software project management tool) </li>
 <li> Front end hosted using Netlify, (Hosting using Azure and github pipelines was attempted) </li>
 <li> Backend API hosted using Heroku </li>
 <li> MongoDB used for database, hosted using Mongo Atlas </li>
@@ -44,3 +45,6 @@ This project contains a web app, which allows the user to create and display not
 <h1> Setup </h1>
 API keys and Apollo Client are removed in this repo.
 Please make sure you fill in the API keys and URI's
+
+Front end: Use npm install
+Back end: Use mvn install
